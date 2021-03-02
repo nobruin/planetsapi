@@ -6,3 +6,6 @@ spring:
   jpa:
     properties.hibernate.dialect: org.hibernate.dialect.HSQLDialect
     hibernate.ddl-auto: update
+springdoc:
+  api-docs:
+    path: /api-docs

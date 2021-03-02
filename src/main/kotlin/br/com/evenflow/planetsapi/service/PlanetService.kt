@@ -2,26 +2,25 @@ package br.com.evenflow.planetsapi.service
 
 import br.com.evenflow.planetsapi.model.Planet
 import br.com.evenflow.planetsapi.repository.PlanetRepository
+import br.com.evenflow.planetsapi.service.validator.PlanetValidator
 import org.springframework.stereotype.Service
 import org.springframework.util.Assert
 import java.util.*
 
 @Service
-class PlanetService(val planetRepository: PlanetRepository) {
+class PlanetService(val planetRepository: PlanetRepository, val validator: PlanetValidator) {
 
     fun search(): List<Planet> {
         return planetRepository.findAll().toList()
     }
 
     fun add(planet: Planet): Planet {
-        Assert.hasLength(planet.name, "[name] field cannot be empty")
-        Assert.hasLength(planet.terrain, "[terrain] field cannot be empty")
-        Assert.hasLength(planet.climate, "[climate] field cannot be empty")
-
+        validator.isValid(planet)
         return planetRepository.save(planet)
     }
 
     fun update(id: Long, planet: Planet): Planet{
+            validator.isValid(planet)
             val safePlanet = planet.copy(id)
             return planetRepository.save(safePlanet)
     }
