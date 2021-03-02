@@ -69,7 +69,7 @@ class PlanetControllerTest {
             .andDo(MockMvcResultHandlers.print())
     }
 
-    //@Test
+    @Test
     fun `test create new planet with error empty name`(){
 
         val planet = Planet(name = "", terrain = "arenoso", climate = "quente")
@@ -80,9 +80,46 @@ class PlanetControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .content(json))
             .andExpect(MockMvcResultMatchers.status().isBadRequest)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.name").value(planet.name))
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.terrain").value(planet.terrain))
-            .andExpect(MockMvcResultMatchers.jsonPath("\$.climate").value(planet.climate))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.statusCode").isNumber)
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.statusCode").value(400))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.message").isString)
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.message").value("[name] field cannot be empty"))
+            .andDo(MockMvcResultHandlers.print())
+    }
+
+    @Test
+    fun `test create new planet with error empty terrain`(){
+
+        val planet = Planet(name = "terra test", terrain = "", climate = "quente")
+        val json = ObjectMapper().writeValueAsString(planet)
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/planets/")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(MockMvcResultMatchers.status().isBadRequest)
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.statusCode").isNumber)
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.statusCode").value(400))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.message").isString)
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.message").value("[terrain] field cannot be empty"))
+            .andDo(MockMvcResultHandlers.print())
+    }
+
+    @Test
+    fun `test create new planet with error empty climate`(){
+
+        val planet = Planet(name = "terra test", terrain = "teste", climate = "")
+        val json = ObjectMapper().writeValueAsString(planet)
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/planets/")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(MockMvcResultMatchers.status().isBadRequest)
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.statusCode").isNumber)
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.statusCode").value(400))
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.message").isString)
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.message").value("[climate] field cannot be empty"))
             .andDo(MockMvcResultHandlers.print())
     }
 

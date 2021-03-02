@@ -15,6 +15,9 @@ class PlanetService(val planetRepository: PlanetRepository) {
 
     fun add(planet: Planet): Planet {
         Assert.hasLength(planet.name, "[name] field cannot be empty")
+        Assert.hasLength(planet.terrain, "[terrain] field cannot be empty")
+        Assert.hasLength(planet.climate, "[climate] field cannot be empty")
+
         return planetRepository.save(planet)
     }
 
