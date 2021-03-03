@@ -2,6 +2,7 @@ package br.com.evenflow.planetsapi.service
 
 import br.com.evenflow.planetsapi.model.Planet
 import br.com.evenflow.planetsapi.repository.PlanetRepository
+import br.com.evenflow.planetsapi.service.api.StarKttpClient
 import br.com.evenflow.planetsapi.service.validator.PlanetValidator
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -9,7 +10,10 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class PlanetService(val planetRepository: PlanetRepository, val validator: PlanetValidator) {
+class PlanetService(
+    val planetRepository: PlanetRepository,
+    val validator: PlanetValidator,
+) {
 
     fun search(name:String, pageable: Pageable): Page<Planet>? {
         return planetRepository.findAllByNameContains(name = name, pageable = pageable)
@@ -17,12 +21,18 @@ class PlanetService(val planetRepository: PlanetRepository, val validator: Plane
 
     fun add(planet: Planet): Planet {
         validator.isValid(planet)
+        validator.isNameUnique(planet)
+
+        planet.countFilms = StarKttpClient.getCountFilmByPlanetName(planet.name)
         return planetRepository.save(planet)
     }
 
     fun update(id: Long, planet: Planet): Planet{
             validator.isValid(planet)
             val safePlanet = planet.copy(id)
+            safePlanet.countFilms = StarKttpClient.getCountFilmByPlanetName(safePlanet.name)
+
+            validator.isNameUnique(planet)
             return planetRepository.save(safePlanet)
     }
 
@@ -38,5 +48,9 @@ class PlanetService(val planetRepository: PlanetRepository, val validator: Plane
         if (planetRepository.existsById(id)) {
             planetRepository.deleteById(id)
         }
+    }
+
+    fun searchStarWarsPlanets(){
+
     }
 }

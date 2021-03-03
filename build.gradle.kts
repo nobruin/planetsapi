@@ -14,6 +14,7 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
 	mavenCentral()
+	jcenter()
 }
 
 dependencies {
@@ -25,6 +26,12 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.springdoc:springdoc-openapi-ui:1.5.5")
+	implementation("khttp:khttp:1.0.0")
+	implementation("com.beust:klaxon:5.0.1")
+	implementation ("com.squareup.retrofit2:retrofit:2.7.0")
+	implementation ("com.squareup.retrofit2:converter-gson:2.7.0")
+	implementation ("com.squareup.okhttp3:okhttp:4.3.1")
+
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("org.hsqldb:hsqldb")

@@ -1,3 +1,6 @@
+swapi:
+  search:
+    url: https://swapi.dev/api/planets?search=
 spring:
   datasource:
     url: jdbc:hsqldb:file:database/main/db

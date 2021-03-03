@@ -9,4 +9,6 @@ interface PlanetRepository: JpaRepository<Planet, Long>{
     fun findAllByNameContains(name: String, pageable: Pageable): Page<Planet>?
 
     fun findByName(name: String): Planet?
+
+    fun existsByName(name: String):Boolean
 }

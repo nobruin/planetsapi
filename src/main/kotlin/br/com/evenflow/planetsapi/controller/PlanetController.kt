@@ -52,4 +52,9 @@ class PlanetController(val service: PlanetService) {
         service.deleteById(id)
         return ResponseEntity.ok().build()
     }
+
+    @GetMapping("starwars")
+    fun listStarWarsPlanets(){
+        
+    }
 }
