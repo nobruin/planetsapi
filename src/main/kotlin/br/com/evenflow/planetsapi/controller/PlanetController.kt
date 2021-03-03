@@ -2,9 +2,12 @@ package br.com.evenflow.planetsapi.controller
 
 import br.com.evenflow.planetsapi.model.Planet
 import br.com.evenflow.planetsapi.service.PlanetService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import javax.websocket.server.PathParam
 
 @RestController
 @RequestMapping("planets")
@@ -12,10 +15,11 @@ class PlanetController(val service: PlanetService) {
 
 
     @GetMapping
-    fun list(): ResponseEntity<List<Planet>> {
-        val planets = service.search().toList()
-        return ResponseEntity.ok(planets)
-
+    fun list(
+        @RequestParam(defaultValue = "") name: String,
+        pageable: Pageable
+    ): Page<Planet>?  {
+        return service.search(name, pageable)
     }
 
     @GetMapping("{id}")

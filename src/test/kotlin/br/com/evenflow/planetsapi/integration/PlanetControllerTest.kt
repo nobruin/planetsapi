@@ -25,15 +25,14 @@ class PlanetControllerTest {
 
     @Test
     fun `test get all planets`(){
-
-        planetService.add(Planet(name = "Terra", terrain = "arenoso", climate = "quente"))
+        planetService.add(Planet(name = "teste", terrain = "teste", climate = "teste"))
 
         mockMvc.perform(MockMvcRequestBuilders.get("/planets"))
-            .andExpect(MockMvcResultMatchers.jsonPath("\$").isArray)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$[0].id").isNumber)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$[0].name").isString)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$[0].terrain").isString)
-            .andExpect(MockMvcResultMatchers.jsonPath("\$[0].climate").isString)
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.content").isArray)
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.content[0].id").isNumber)
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.content[0].name").isString)
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.content[0].terrain").isString)
+            .andExpect(MockMvcResultMatchers.jsonPath("\$.content[0].climate").isString)
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andDo(MockMvcResultHandlers.print())
     }
@@ -41,7 +40,7 @@ class PlanetControllerTest {
     @Test
     fun `test get planet by id`(){
 
-        val planet = planetService.add(Planet(name = "Terra", terrain = "arenoso", climate = "quente"))
+        val planet = planetService.add(Planet(name = "Marte", terrain = "arenoso", climate = "quente"))
 
         mockMvc.perform(MockMvcRequestBuilders.get("/planets/${planet.id}"))
             .andExpect(MockMvcResultMatchers.status().isOk)
@@ -55,7 +54,7 @@ class PlanetControllerTest {
     @Test
     fun `test create new planet`(){
 
-        val planet = Planet(name = "Terra", terrain = "arenoso", climate = "quente")
+        val planet = Planet(name = "Jupiter", terrain = "arenoso", climate = "quente")
         val json = ObjectMapper().writeValueAsString(planet)
 
         mockMvc.perform(MockMvcRequestBuilders.post("/planets/")

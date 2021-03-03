@@ -3,15 +3,16 @@ package br.com.evenflow.planetsapi.service
 import br.com.evenflow.planetsapi.model.Planet
 import br.com.evenflow.planetsapi.repository.PlanetRepository
 import br.com.evenflow.planetsapi.service.validator.PlanetValidator
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
-import org.springframework.util.Assert
 import java.util.*
 
 @Service
 class PlanetService(val planetRepository: PlanetRepository, val validator: PlanetValidator) {
 
-    fun search(): List<Planet> {
-        return planetRepository.findAll().toList()
+    fun search(name:String, pageable: Pageable): Page<Planet>? {
+        return planetRepository.findAllByNameContains(name = name, pageable = pageable)
     }
 
     fun add(planet: Planet): Planet {
