@@ -34,7 +34,8 @@ dependencies {
 
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	runtimeOnly("org.hsqldb:hsqldb")
+	//runtimeOnly("org.hsqldb:hsqldb")
+	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

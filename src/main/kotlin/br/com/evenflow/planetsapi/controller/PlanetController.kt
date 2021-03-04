@@ -1,13 +1,14 @@
 package br.com.evenflow.planetsapi.controller
 
 import br.com.evenflow.planetsapi.model.Planet
+import br.com.evenflow.planetsapi.model.StarWarsResult
 import br.com.evenflow.planetsapi.service.PlanetService
+import br.com.evenflow.planetsapi.service.api.StarKttpClient
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import javax.websocket.server.PathParam
 
 @RestController
 @RequestMapping("planets")
@@ -30,7 +31,7 @@ class PlanetController(val service: PlanetService) {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun add(@RequestBody planet: Planet): ResponseEntity<Planet> {
-        val safePlanet = service.add(planet)
+        service.add(planet)
         return ResponseEntity.status(HttpStatus.CREATED).body(planet)
     }
 
@@ -53,8 +54,8 @@ class PlanetController(val service: PlanetService) {
         return ResponseEntity.ok().build()
     }
 
-    @GetMapping("starwars")
-    fun listStarWarsPlanets(){
-        
+    @GetMapping("/starwars")
+    fun listStarWarsPlanets(@RequestParam(defaultValue = "0") page: Int): StarWarsResult {
+        return StarKttpClient.getStarWarsPlanet(page)
     }
 }

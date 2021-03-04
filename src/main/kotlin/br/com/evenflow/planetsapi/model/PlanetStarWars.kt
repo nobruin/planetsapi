@@ -26,3 +26,4 @@ data class PlanetStarWars(
         const val APPLICATION_NAME = "PLANETSAPI"
     }
 }
+
