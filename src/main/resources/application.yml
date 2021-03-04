@@ -1,4 +1,15 @@
 spring:
+  jpa:
+    database: MYSQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    driver-class-name=com: mysql:jdbc:Driver
+    url: jdbc:mysql://localhost:3306/planetsapi?useSSL=false&allowPublicKeyRetrieval=true
+    username: user
+    password: password
+test:
   h2:
     console:
       enabled: true
@@ -8,14 +19,6 @@ spring:
       username: sa
       password:
       driverClassName: org.h2.Driver
-# hsqldb
-#  datasource:
-#    url: jdbc:hsqldb:file:database/main/db
-#    username: sa
-#    driver-class-name: org.hsqldb.jdbc.JDBCDriver
-#  jpa:
-#    properties.hibernate.dialect: org.hibernate.dialect.HSQLDialect
-#    hibernate.ddl-auto: update
 springdoc:
   api-docs:
     path: /api-docs

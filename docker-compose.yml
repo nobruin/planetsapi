@@ -1,0 +1,23 @@
+version: '3'
+services:
+  mysql-database:
+    image: mysql:8
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=planetsapi
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+    ports:
+      - 3306:3306
+  spring-app:
+    build: .
+    depends_on:
+      - mysql-database
+    ports:
+      - 8080:8080
+    environment:
+      - DATABASE_HOST=mysql-database
+      - DATABASE_USER=user
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=planetsapi
+      - DATABASE_PORT=3306
